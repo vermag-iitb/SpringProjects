@@ -4,16 +4,19 @@ Target Class
 
 Objective:
 To inject dependent class (java.time.LocalDateTime) instance without Spring Framework
-(i.e., using HAS-A property)
+(i.e., using HAS-A property) to the target class (com.nt.sbeans.WishMessageGenerator).
 
  */
 
-package com.nt;
+package com.nt.sbeans;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 
+@Component("wmg")
 public class WishMessageGenerator
 {
-    // Has-A property, i.e., instance created
     private LocalDateTime ldt;
 
     public LocalDateTime getLdt()
@@ -21,6 +24,7 @@ public class WishMessageGenerator
         return ldt;
     }
 
+    @Autowired
     public void setLdt(LocalDateTime ldt)
     {
         System.out.println("WishMessageGenerator.setLdt called");

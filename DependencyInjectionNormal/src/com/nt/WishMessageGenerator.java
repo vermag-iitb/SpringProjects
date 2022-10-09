@@ -12,6 +12,14 @@ import java.time.LocalDateTime;
 public class WishMessageGenerator
 {
     // Has-A property, i.e., instance created
+    // Way 1: Eager instantiation
+    // --------------------------
+    // Here the object gets created for sure, even when setter is not called. Hence, memory wastage.
+    // private LocalDateTime ldt = new LocalDateTime();
+
+    // Way 2: Late instantiation
+    // --------------------------
+    // Here the object gets created only when setter is called, else not.
     private LocalDateTime ldt;
 
     public LocalDateTime getLdt()

@@ -1,0 +1,99 @@
+Target class:    class that needs other class's object
+Dependent class: class that is to be injected to target class
+=======================================================================================================================
+A. Converting a normal bean to spring bean (2):
+Way 1: @Component()
+       public class DependencyInjectionNormal
+       {
+            ...
+       }
+Way 2: applicationContext.xml => <bean id="ar" class="com.nt.DependencyInjectionNormal">
+=======================================================================================================================
+B. Getting Spring container to manage (dependency management & lifecycle management) a Spring bean for us:
+    main() => create object for any class implementing ApplicationContext Interface =>
+        pass path of applicationContext.xml to its constructor
+
+Classes implementing ApplicationContext interface (4):
+a. FileSystemXmlApplicationContext
+b. ClassPathXmlApplicationContext
+c. AnnotationConfigApplicationContext
+d. XmlWebApplicationContext
+
+Eg.: FileSystemXmlApplicationContext ctx = new FileSystemXmlApplicationContext("../applicationContext.xml")
+NOTE: - name of applicationContext.xml can be anything
+      - spring container creates only one object for one spring bean as default if not defined otherwise
+      (this characteristic is called singleton)
+=======================================================================================================================
+C. Ways to dependency management (2):
+1. Dependency Lookup
+    Con: Code has to be written inside target class, to search and get dependent class from registries (JNDI, COS, RMI, WEBLOGIC, WILDFLY, etc)
+2. Dependency Injection (preferred way)
+    Con: sometimes irrelevant objects may get injected
+=======================================================================================================================
+D. Types of dependency injection used with/out Spring framework(7):
+1. Setter Injection:
+        here, Spring container uses setter method to inject dependent class object to target class
+        Way: @Autowired annotation before setter method of dependent class inside target class definition +
+                    <property> tag in Spring configuration file (i.e., applicationContext.xml)
+
+2. Constructor Injection
+        Way: @Autowired annotation before setter method of dependent class inside target class definition +
+                    <property> tag in Spring configuration file (i.e., applicationContext.xml)
+
+3. Field Injtecion
+        Way: @Autowired annotation before setter method of dependent class inside target class definition +
+                    <property> tag in Spring configuration file (i.e., applicationContext.xml)
+
+4. Arbitrary Method Injection
+        Way: @Autowired annotation before setter method of dependent class inside target class definition +
+                    <property> tag in Spring configuration file (i.e., applicationContext.xml)
+
+5. Aware injection/Interface Injection
+
+6. Lookup method Injection
+
+7. Method Injection/Method Replacer
+
+=======================================================================================================================
+E. Spring configuration declaration (3)
+a. XML configs
+    applicationContext.xml (also called Spring configuration file)
+        Tag 1: <bean ...> ... </bean>
+        Tag 2: <property>
+b. XML + Annotation configs (recommended)
+    Thumb rules for making a spring bean:
+    i. for pre-defined class (bcz annotation can't be added) => add following tag into spring config file:
+          <bean id="ldt" class="java.time.LocalDateTime" factory-method="now">
+    NOTE: factory-method attribute calls the method as soon as the bean id is encountered
+          factory-method is a special method that returns object of its own class or different class
+    ii. for user-defined class => use @Component(id="") & specify corresponding packages in Spring configuration file
+        (applicationContext.xml)
+        E.g.: <bean>
+                ...
+                <context: component-scan base-package="com.nt.sbeans"/>
+                // this will direct Spring container to scan all classes inside base-package for annotations
+              </bean>
+    iii. Create IOC/Spring container by creating an object for any class implementing ApplicationContext Interface
+         (discussed in Point B above)
+c. 100% code driven (also called Java configuration approach with no XMLs)
+=======================================================================================================================
+F. Difference between XML and HTML:
+                XML                              |                      HTML
+---------------------------------------------------------------------------------------------------------
+ i.   tags are used to define and describe data  | tags are used to describe display features on webpage
+ ii.  case-sensitive                             | case-insensitive
+ iii. typed coding                               |
+ iv.  nesting should be done properly            |
+ v.   entire content is placed inside root-tag   | entire content is placed inside <html> tag
+---------------------------------------------------------------------------------------------------------
+=======================================================================================================================
+G. Spring libraries setup:
+a. Site: https://mvnrepository.com/
+b. Download (==5.3.23):
+    spring-context (includes spring-bean)
+    spring-context-support
+    spring-core
+    spring-aop
+    spring-expression
+    spring-jcl
+    spring-beans
